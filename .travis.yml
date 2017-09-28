@@ -19,4 +19,4 @@ deploy:
   local_dir: "./dist/"
   skip_cleanup: true
   on:
-    branch: travix
+    branch: travis

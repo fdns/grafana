@@ -13,3 +13,10 @@ before_install:
 script:
   - cd ../../ && mv fdns grafana && cd grafana/grafana
   - go run build.go build package
+deploy:
+  provider: releases
+  api_key: $GH_TOKEN
+  local_dir: "./dist/"
+  skip_cleanup: true
+  on:
+    branch: travix

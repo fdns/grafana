@@ -176,7 +176,13 @@ func convertToResult(dto *TargetResponseDTO) (*tsdb.QueryResult, error) {
 
 				key, ok := tuple[0].(string)
 				if !ok {
-					return nil, fmt.Errorf("Unexpected key type: %T. Expected string", key)
+                                        // Try to convert a float to a string in case of an int key
+                                        key2, err := extractFloat64(tuple[0]);
+                                        if err == nil {
+                                            key = strconv.FormatFloat(key2, 'f', -1, 64)
+                                        } else {
+					    return nil, fmt.Errorf("Unexpected key type: %T. Expected string or float", tuple[0])
+                                        }
 				}
 
 				pointValue, err := extractFloat64(tuple[1])
